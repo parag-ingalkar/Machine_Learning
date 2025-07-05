@@ -1,9 +1,15 @@
 import numpy as np
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, mean_squared_error
+from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
-from ml_package.linear_regression import LinearRegression
+from ml_package.LinearRegression import LinearRegression
+from ml_package.LogisticRegression import LogisticRegression
 
+
+# LINEAR REGRESSION
+'''
 X, Y = datasets.make_regression(n_samples = 100, n_features = 1, noise= 20, random_state= 10)
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state= 1234)
 fig = plt.figure(figsize=(8, 6))
@@ -28,3 +34,23 @@ m1 = plt.scatter(X_train, Y_train, color = cmap(0.9), s = 10)
 m1 = plt.scatter(X_test, Y_test, color = cmap(0.5), s = 10)
 plt.plot(X, y_pred_line, color="black", linewidth=2, label="Prediction")
 # plt.savefig("LinearRegression_Model_fit.png")
+'''
+
+# LOGISTIC REGRESSION
+
+X, y = datasets.load_breast_cancer(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=0)
+
+clf = LogisticRegression()
+scaler = StandardScaler()
+
+X_train_s = scaler.fit_transform(X_train)
+X_test_s = scaler.transform(X_test)
+
+
+clf.fit(X_train_s, y_train)
+y_pred = clf.predict(X_test_s)
+
+accu = accuracy_score(y_test, y_pred)
+
+print(f"Test Accuracy = {accu}")
