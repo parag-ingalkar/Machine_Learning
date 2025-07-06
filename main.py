@@ -4,8 +4,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, mean_squared_error
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
 from ml_package.LinearRegression import LinearRegression
 from ml_package.LogisticRegression import LogisticRegression
+from ml_package.KNN import KNN
 
 
 # LINEAR REGRESSION
@@ -37,7 +39,7 @@ plt.plot(X, y_pred_line, color="black", linewidth=2, label="Prediction")
 '''
 
 # LOGISTIC REGRESSION
-
+'''
 X, y = datasets.load_breast_cancer(return_X_y=True)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=0)
 
@@ -54,3 +56,21 @@ y_pred = clf.predict(X_test_s)
 accu = accuracy_score(y_test, y_pred)
 
 print(f"Test Accuracy = {accu}")
+'''
+
+# KNN
+
+X, y = datasets.load_iris(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=0)
+
+cmap = ListedColormap([ '#FF0000' , '#00FF00' , '#0000FF'])
+plt.figure()
+plt.scatter(X[:,2], X[:,3], c = y, cmap = cmap, edgecolors='k', s =20)
+# plt.savefig("implementation_notebooks/KNN_iris.png")
+
+clf = KNN(k=5)
+clf.fit(X_train, y_train)
+predictions = clf.predict(X_test)
+
+acc = accuracy_score(y_test, predictions)
+print(acc)
