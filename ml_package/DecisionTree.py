@@ -14,7 +14,7 @@ class Node:
 
 class DecisionTree:
     def __init__(self, min_samples_split = 2, max_depth = 100, n_features = None):
-        self.min_sampels_split = min_samples_split
+        self.min_samples_split = min_samples_split
         self.max_depth = max_depth
         self.n_features = n_features
         self.root = None
@@ -28,7 +28,7 @@ class DecisionTree:
         n_labels = len(np.unique(y))
 
         # Stopping Criteria
-        if (depth >= self.max_depth or n_labels == 1 or n_samples < self.min_sampels_split):
+        if (depth >= self.max_depth or n_labels == 1 or n_samples < self.min_samples_split):
             leaf_value = self._most_common_label(y)
             return Node(value = leaf_value)
         

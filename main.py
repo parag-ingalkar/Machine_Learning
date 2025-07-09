@@ -139,7 +139,7 @@ visualize_svm()
 '''
 
 # Decision Tree
-
+'''
 from ml_package.DecisionTree import DecisionTree
 
 # X, y = datasets.load_breast_cancer(return_X_y=True)
@@ -152,7 +152,27 @@ y = tumor_df.iloc[:, -1:]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0, stratify=y)
 
-clf = DecisionTree(max_depth=10, min_samples_split=3)
+clf = DecisionTree(max_depth=10, min_samples_split=2)
+clf.fit(X_train, y_train.values.ravel())
+predictions = clf.predict(X_test)
+
+metrics = evaluate_metrics(y_test, predictions)
+print(metrics)
+'''
+
+# Random Forest
+
+from ml_package.RandomForest import RandomForest
+
+tumor_df = pd.read_csv('IBM_Machine_Learning/datafiles/tumor.csv')
+# Get the input features
+X = tumor_df.iloc[:, :-1].to_numpy()
+# Get the target variable
+y = tumor_df.iloc[:, -1:]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0, stratify=y)
+
+clf = RandomForest(n_tress= 15, max_depth=5)
 clf.fit(X_train, y_train.values.ravel())
 predictions = clf.predict(X_test)
 
